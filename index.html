@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GeoJSON su Google Maps</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx4q_AR_07NDfzfGwvUyfFG35sRHRFRCM
+"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      #map {
+        height: 100%;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 4,
+          center: { lat: 4.2593796988299015, lng: 17.57860969236468 },
+        });
+
+        $.getJSON("data.geojson", function (data) {
+          map.data.addGeoJson(data);
+        });
+      }
+
+      google.maps.event.addDomListener(window, "load", initMap);
+    </script>
+  </body>
+</html>
