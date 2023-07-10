@@ -2,8 +2,7 @@
 <html>
   <head>
     <title>GeoJSON su Google Maps</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx4q_AR_07NDfzfGwvUyfFG35sRHRFRCM
-"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=TUA_CHIAVE_API"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
       #map {
@@ -23,7 +22,20 @@
       function initMap() {
         const map = new google.maps.Map(document.getElementById("map"), {
           zoom: 4,
-          center: { lat: 4.2593796988299015, lng: 17.57860969236468 },
+          center: { lat: 0, lng: 0 },
+        });
+
+        map.data.addListener("click", function (event) {
+          const name = event.feature.getProperty("name");
+          const description = event.feature.getProperty("description");
+          const content = "<h3>" + name + "</h3><p>" + description + "</p>";
+
+          const infowindow = new google.maps.InfoWindow({
+            content: content,
+          });
+
+          infowindow.setPosition(event.latLng);
+          infowindow.open(map);
         });
 
         $.getJSON("data.geojson", function (data) {
